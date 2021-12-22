@@ -2,6 +2,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@smpl/smpl-wallet-core": [
+        "dist/smpl/smpl-wallet-core/smpl-smpl-wallet-core",
+        "dist/smpl/smpl-wallet-core"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

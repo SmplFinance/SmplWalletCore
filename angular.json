@@ -3,5 +3,140 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "application-showcase": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/application-showcase",
+      "sourceRoot": "projects/application-showcase/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/application-showcase",
+            "index": "projects/application-showcase/src/index.html",
+            "main": "projects/application-showcase/src/main.ts",
+            "polyfills": "projects/application-showcase/src/polyfills.ts",
+            "tsConfig": "projects/application-showcase/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/application-showcase/src/favicon.ico",
+              "projects/application-showcase/src/assets"
+            ],
+            "styles": [
+              "projects/application-showcase/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/application-showcase/src/environments/environment.ts",
+                  "with": "projects/application-showcase/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "application-showcase:build:production"
+            },
+            "development": {
+              "browserTarget": "application-showcase:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "application-showcase:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/application-showcase/src/test.ts",
+            "polyfills": "projects/application-showcase/src/polyfills.ts",
+            "tsConfig": "projects/application-showcase/tsconfig.spec.json",
+            "karmaConfig": "projects/application-showcase/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/application-showcase/src/favicon.ico",
+              "projects/application-showcase/src/assets"
+            ],
+            "styles": [
+              "projects/application-showcase/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "@smpl/smpl-wallet-core": {
+      "projectType": "library",
+      "root": "projects/smpl/smpl-wallet-core",
+      "sourceRoot": "projects/smpl/smpl-wallet-core/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/smpl/smpl-wallet-core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/smpl/smpl-wallet-core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/smpl/smpl-wallet-core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/smpl/smpl-wallet-core/src/test.ts",
+            "tsConfig": "projects/smpl/smpl-wallet-core/tsconfig.spec.json",
+            "karmaConfig": "projects/smpl/smpl-wallet-core/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "application-showcase"
 }
