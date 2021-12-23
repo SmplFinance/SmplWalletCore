@@ -26,7 +26,12 @@
             "polyfills": "projects/application-showcase/src/polyfills.ts",
             "tsConfig": "projects/application-showcase/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "allowedCommonJsDependencies": ["keycloak-js"],
+            "allowedCommonJsDependencies": [
+              "keycloak-js",
+              "@cosmjs/crypto",
+              "@cosmjs/stargate",
+              "@cosmjs/proto-signing"
+            ],
             "assets": [
               "projects/application-showcase/src/favicon.ico",
               "projects/application-showcase/src/assets"

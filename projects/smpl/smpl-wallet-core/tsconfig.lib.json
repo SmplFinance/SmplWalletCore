@@ -6,7 +6,13 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "allowSyntheticDefaultImports": true,
+    "types": [],
+    "paths": {
+      "path": ["node_modules/path-browserify"],
+      "stream": ["node_modules/stream-browserify"],
+      "crypto": ["node_modules/crypto-browserify"]
+    }
   },
   "exclude": [
     "src/test.ts",

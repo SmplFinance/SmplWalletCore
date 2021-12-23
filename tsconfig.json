@@ -6,7 +6,10 @@
       "@smpl/smpl-wallet-core": [
         "dist/smpl/smpl-wallet-core/smpl-smpl-wallet-core",
         "dist/smpl/smpl-wallet-core"
-      ]
+      ],
+      "path": ["node_modules/path-browserify"],
+      "stream": ["node_modules/stream-browserify"],
+      "crypto": ["node_modules/crypto-browserify"]
     },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -27,7 +30,8 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

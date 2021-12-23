@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {SmplWalletCoreComponent} from './smpl-wallet-core.component';
 import {KeycloakService} from 'keycloak-angular';
 import {SmplAuthGuardGuard} from './guards/smpl-auth-guard.guard';
+import {WalletService} from './services/wallet.service';
 
 
 @NgModule({
@@ -12,7 +13,7 @@ import {SmplAuthGuardGuard} from './guards/smpl-auth-guard.guard';
   exports: [
     SmplWalletCoreComponent,
   ],
-  providers: [KeycloakService, SmplAuthGuardGuard]
+  providers: [KeycloakService, SmplAuthGuardGuard, WalletService]
 })
 export class SmplWalletCoreModule {
   constructor(private keycloakService: KeycloakService) {
@@ -24,8 +25,7 @@ export class SmplWalletCoreModule {
           clientId: 'smpl-angular-client',
         },
         initOptions: {
-          // onLoad: 'login-required',
-          checkLoginIframe: false,
+          onLoad: 'login-required',
         },
         enableBearerInterceptor: true,
         bearerExcludedUrls: [],
