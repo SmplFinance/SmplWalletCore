@@ -6,9 +6,13 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "watch:smpl-wallet-core": "ng build @smpl/smpl-wallet-core --watch --configuration development",
     "test": "ng test",
     "mocks": "mocks-server"
   },
+  "workspaces": [
+    "projects/**"
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.0.0",
@@ -19,6 +23,8 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "keycloak-angular": "^8.4.0",
+    "keycloak-js": "^16.1.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
