@@ -2,6 +2,10 @@
 
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.0.
 
+[//]: # (## Dependencies)
+
+[//]: # (This library depends on som older packages and requires polyfills.)
+
 ## Code scaffolding
 
 Run `ng generate component component-name --project smpl-wallet-core` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project smpl-wallet-core`.
