@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WalletService} from '@smpl/smpl-wallet-core';
 import {DirectSecp256k1HdWallet} from '@cosmjs/proto-signing';
-import {KeycloakService} from 'keycloak-angular';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-wallet',
@@ -9,7 +9,7 @@ import {KeycloakService} from 'keycloak-angular';
   styleUrls: ['./wallet.component.scss']
 })
 export class WalletComponent implements OnInit {
-  constructor(private walletService: WalletService, private authService: KeycloakService) {
+  constructor(private walletService: WalletService, private httpClient: HttpClient) {
   }
 
   private wallet?: DirectSecp256k1HdWallet;
@@ -23,9 +23,22 @@ export class WalletComponent implements OnInit {
         this.wallet = w;
       })
 
-    this.authService
-      .getToken()
-      .then(t => console.log('token is ', t))
+
+  }
+
+  getSecrets(): void {
+    console.log('getting secret')
+    this.httpClient
+      .get('http://localhost:3100/api/secrets')
+      .subscribe(
+        {
+          next: res => {
+            console.log('got secrets', res)
+          },
+          error: error => console.log('got error', error),
+          complete: () => console.log('http request completed')
+        }
+      )
   }
 
 }

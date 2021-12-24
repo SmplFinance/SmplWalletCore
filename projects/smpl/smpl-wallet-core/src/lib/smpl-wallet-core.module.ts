@@ -3,17 +3,25 @@ import {SmplWalletCoreComponent} from './smpl-wallet-core.component';
 import {KeycloakService} from 'keycloak-angular';
 import {SmplAuthGuardGuard} from './guards/smpl-auth-guard.guard';
 import {WalletService} from './services/wallet.service';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {JwtTokenInterceptor} from './interceptors/jwt-token.interceptor';
 
 
 @NgModule({
   declarations: [
     SmplWalletCoreComponent
   ],
-  imports: [],
+  imports: [
+    HttpClientModule
+  ],
   exports: [
     SmplWalletCoreComponent,
   ],
-  providers: [KeycloakService, SmplAuthGuardGuard, WalletService]
+  providers: [
+    KeycloakService,
+    SmplAuthGuardGuard,
+    WalletService,
+  ]
 })
 export class SmplWalletCoreModule {
   constructor(private keycloakService: KeycloakService) {
