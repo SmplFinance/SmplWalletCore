@@ -6,6 +6,7 @@ import {from, Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class WalletService {
+  salt?: string
 
   constructor() {
   }

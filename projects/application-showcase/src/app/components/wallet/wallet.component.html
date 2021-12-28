@@ -2,3 +2,8 @@
 <div>
   <button (click)="getSecrets()">Get Secrets</button>
 </div>
+<div>
+  <input [(ngModel)]="thingToEncrypt"/>
+  <input [(ngModel)]="key"/>
+  <button (click)="encryptWallet()">Encrypt</button>
+</div>

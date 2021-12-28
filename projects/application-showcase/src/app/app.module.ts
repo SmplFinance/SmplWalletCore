@@ -8,6 +8,7 @@ import {WalletComponent} from './components/wallet/wallet.component';
 import {OpenComponent} from './components/open/open.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {JwtTokenInterceptor} from '@smpl/smpl-wallet-core';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {JwtTokenInterceptor} from '@smpl/smpl-wallet-core';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SmplWalletCoreModule
+    SmplWalletCoreModule,
+    FormsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtTokenInterceptor, multi: true}
