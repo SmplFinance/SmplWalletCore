@@ -12,15 +12,6 @@ export class WalletService {
   }
 
   createWallet(): Observable<DirectSecp256k1HdWallet> {
-    return from(DirectSecp256k1HdWallet.generate(18))
-    // .then(
-    //   async (w) => {
-    //     console.log('generated wallet', w, w)
-    //     const [account] = await w.getAccounts();
-    //     console.log('generated account', account.address)
-    //     this.wallet = w
-    //   }
-    // )
-
+    return from(DirectSecp256k1HdWallet.generate(18, {prefix: 'smpl'}))
   }
 }

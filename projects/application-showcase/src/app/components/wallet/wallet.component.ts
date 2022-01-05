@@ -21,19 +21,17 @@ export class WalletComponent implements OnInit {
   ngOnInit(): void {
     this.walletService
       .createWallet()
-      .subscribe(w => {
+      .subscribe(async w => {
         console.log('wallet', w)
-        console.log('accounts', w.getAccounts())
+        console.log('accounts', await w.getAccounts())
         this.wallet = w;
       })
-
-
   }
 
   getSecrets(): void {
     console.log('getting secret')
     this.httpClient
-      .get('http://localhost:3100/api/secrets')
+      .get('http://localhost:8081/wallet')
       .subscribe(
         {
           next: (res: any) => {

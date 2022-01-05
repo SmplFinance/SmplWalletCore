@@ -16,7 +16,9 @@ adjustments.
     "keycloak-js",
     "@cosmjs/crypto",
     "@cosmjs/stargate",
-    "@cosmjs/proto-signing"
+    "@cosmjs/proto-signing",
+    "crypto-js/aes",
+    "crypto-js"
   ]
 }
  ```

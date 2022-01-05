@@ -1,7 +1,13 @@
 [
   {
     "id": "base",
-    "routesVariants": ["add-headers:enabled", "get-users:success", "get-user:success", "get-secrets:real"]
+    "routesVariants": [
+      "add-headers:enabled",
+      "get-users:success",
+      "get-user:success",
+      "get-secrets:real",
+      "get-mnemonics:success"
+    ]
   },
   {
     "id": "no-headers",

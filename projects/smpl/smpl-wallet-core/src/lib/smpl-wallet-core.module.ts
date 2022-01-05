@@ -28,7 +28,7 @@ export class SmplWalletCoreModule {
     keycloakService
       .init({
         config: {
-          url: 'http://localhost:8080/auth',
+          url: 'http://keycloak:8080/auth',
           realm: 'SmplFinance',
           clientId: 'smpl-angular-client',
         },
