@@ -3,9 +3,21 @@
   <button (click)="getSecrets()">Get Secrets</button>
 </div>
 <div>
-  <label for="thingToEncrypt">Thing To Encrypt</label>
-  <input id="thingToEncrypt" [(ngModel)]="thingToEncrypt"/>
-  <label for="passphrase">Passphrase</label>
-  <input id="passphrase" [(ngModel)]="key"/>
-  <button (click)="encryptWallet()">Encrypt</button>
+  <button (click)="getVaultWallet()">Get Balances</button>
 </div>
+
+<div *ngFor="let balance of balances">
+  <div>
+    Token: {{balance?.denom}}
+  </div>
+  <div>
+    Amount: {{balance?.amount}}
+  </div>
+</div>
+<!--<div>-->
+<!--  <label for="thingToEncrypt">Thing To Encrypt</label>-->
+<!--  <input id="thingToEncrypt" [(ngModel)]="thingToEncrypt"/>-->
+<!--  <label for="passphrase">Passphrase</label>-->
+<!--  <input id="passphrase" [(ngModel)]="key"/>-->
+<!--  <button (click)="encryptWallet()">Encrypt</button>-->
+<!--</div>-->

@@ -1,0 +1,25 @@
+syntax = "proto3";
+package SmplEcosystem.smplsecretsvaultchain.smplsecretsvaultchain;
+
+// this line is used by starport scaffolding # proto/tx/import
+import "smplsecretsvaultchain/wallet.proto";
+
+option go_package = "github.com/SmplEcosystem/SmplSecretsVaultChain/x/smplsecretsvaultchain/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc StoreWallet(MsgStoreWallet) returns (MsgStoreWalletResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgStoreWallet {
+  string creator = 1;
+  string name = 2;
+  Wallet wallet = 3;
+  string passphrase = 4;
+}
+
+message MsgStoreWalletResponse {
+}
+
+// this line is used by starport scaffolding # proto/tx/message

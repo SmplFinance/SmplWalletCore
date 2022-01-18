@@ -14,4 +14,8 @@ export class WalletService {
   createWallet(): Observable<DirectSecp256k1HdWallet> {
     return from(DirectSecp256k1HdWallet.generate(18, {prefix: 'smpl'}))
   }
+
+  importWallet(mnemonic: string, prefix: string): Observable<DirectSecp256k1HdWallet> {
+    return from(DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {prefix}))
+  }
 }

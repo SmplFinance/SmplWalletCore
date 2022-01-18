@@ -14,7 +14,6 @@ export class JwtTokenInterceptor implements HttpInterceptor {
       .pipe(
         mergeMap(token => {
           const authedRequest = request.clone({headers: request.headers.set('Authorization', `Bearer ${token}`)})
-
           return next.handle(authedRequest)
         })
       )

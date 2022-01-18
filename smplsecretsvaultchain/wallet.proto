@@ -1,0 +1,12 @@
+syntax = "proto3";
+package SmplEcosystem.smplsecretsvaultchain.smplsecretsvaultchain;
+
+option go_package = "github.com/SmplEcosystem/SmplSecretsVaultChain/x/smplsecretsvaultchain/types";
+
+message Wallet {
+  
+  repeated string mnemonic = 1; 
+  string prefix = 2; 
+  string hdpath = 3; 
+  string chainSymbol = 4; 
+}

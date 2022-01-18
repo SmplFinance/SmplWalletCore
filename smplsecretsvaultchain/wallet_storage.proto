@@ -1,0 +1,12 @@
+syntax = "proto3";
+package SmplEcosystem.smplsecretsvaultchain.smplsecretsvaultchain;
+
+option go_package = "github.com/SmplEcosystem/SmplSecretsVaultChain/x/smplsecretsvaultchain/types";
+import "smplsecretsvaultchain/wallet.proto"; 
+
+message WalletStorage {
+  
+  Wallet wallet = 1; 
+  string testPhrase = 2; 
+  string encryptedTestPhrase = 3; 
+}
