@@ -6,6 +6,10 @@
   <button (click)="getVaultWallet()">Get Balances</button>
 </div>
 
+<div>
+  <button (click)="checkAccountExists()">Check Account Exists</button>
+</div>
+
 <div *ngFor="let balance of balances">
   <div>
     Token: {{balance?.denom}}

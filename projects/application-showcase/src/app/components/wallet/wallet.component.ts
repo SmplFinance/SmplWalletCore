@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {WalletService} from '@smpl/smpl-wallet-core';
+import {CosmosWalletService, SmplSecretsVaultWalletServiceService} from '@smpl/smpl-wallet-core';
 import {DirectSecp256k1HdWallet, EncodeObject, Registry} from '@cosmjs/proto-signing';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {enc} from 'crypto-js'
 import {decrypt, encrypt} from 'crypto-js/aes'
-import {catchError, EMPTY, filter, forkJoin, from, map, mergeMap, of} from 'rxjs';
-import {defaultRegistryTypes, GasPrice, SigningStargateClient} from '@cosmjs/stargate';
+import {catchError, delay, EMPTY, filter, forkJoin, from, iif, map, mergeMap, of, tap} from 'rxjs';
+import {defaultRegistryTypes, GasPrice, SigningStargateClient, StargateClient} from '@cosmjs/stargate';
 import {MsgStoreWallet} from '../../proto-generated/smplsecretsvaultchain/tx';
 
 const typeUrl = '/SmplEcosystem.smplsecretsvaultchain.smplsecretsvaultchain.MsgStoreWallet';
@@ -20,7 +20,11 @@ interface TypedEncodeObject<T> extends EncodeObject {
   styleUrls: ['./wallet.component.scss']
 })
 export class WalletComponent implements OnInit {
-  constructor(private walletService: WalletService, private httpClient: HttpClient) {
+  constructor(
+    private walletService: CosmosWalletService,
+    private httpClient: HttpClient,
+    private smplSecretsVaultWalletService: SmplSecretsVaultWalletServiceService
+  ) {
   }
 
   private vaultWallet?: DirectSecp256k1HdWallet;
@@ -46,7 +50,6 @@ export class WalletComponent implements OnInit {
       .get<{ id: string, mnemonic: string[], passphrase: string }>('http://localhost:8081/wallet')
       .pipe(
         mergeMap(secrets => {
-          this.walletService.salt = secrets.passphrase
           return forkJoin([
             of(secrets),
             this.walletService.importWallet(secrets.mnemonic.join(' '), 'ssvt')
@@ -111,6 +114,7 @@ export class WalletComponent implements OnInit {
             map(accounts => accounts[0]),
             mergeMap(
               mainAccount => {
+                console.log('sending test smpl wallet')
                 const msg: TypedEncodeObject<MsgStoreWallet> = {
                   typeUrl,
                   value: MsgStoreWallet.fromPartial(
@@ -135,7 +139,7 @@ export class WalletComponent implements OnInit {
                 return from(this.signingStargateClient.signAndBroadcast(
                   mainAccount.address.trim(),
                   [msg],
-                  'auto',
+                  0,
                   'cool'
                 ))
               }
@@ -152,7 +156,7 @@ export class WalletComponent implements OnInit {
         mergeMap(async wallet => (await wallet.getAccounts())[0]),
         mergeMap(smplAccount => this.httpClient.get('http://localhost:1313/http://testnet-validator1.smplfinance.com:1317/cosmos/bank/v1beta1/balances/' + smplAccount.address))
       )
-      .subscribe((ret:any) => {
+      .subscribe((ret: any) => {
         console.log('smpl wallet is', ret)
         this.balances = ret.balances;
       });
@@ -166,5 +170,33 @@ export class WalletComponent implements OnInit {
     console.log('encrypted data', encrypted.toString());
     const decrypted = decrypt(encrypted, this.key || 'bob')
     console.log('decrypted data', decrypted.toString(enc.Utf8));
+  }
+
+  async checkAccountExists() {
+    const accountAddress = this.vaultWallet ? (await this.vaultWallet.getAccounts())[0].address : '';
+
+    this.walletService.accountExists(accountAddress, new URL('http://0.0.0.0:26657'))
+      .pipe(
+        mergeMap(
+          isAccount => iif(() => isAccount,
+            of(isAccount),
+            this.smplSecretsVaultWalletService.sendFaucetTokens(accountAddress)
+              .pipe(delay(6000))
+          )
+        ),
+        tap(t => console.log('t is, type of ', t, typeof t)),
+        mergeMap(
+          isAccountOrFaucetReturn => iif(
+            () => true,
+            of(isAccountOrFaucetReturn),
+            this.walletService.accountExists(accountAddress, new URL('http://0.0.0.0:26657'))
+            // of('bob')
+          )
+        ),
+        tap(t => console.log('what is this thing', typeof t, t))
+      )
+      .subscribe(
+        isAccount => console.log('account exists?', accountAddress, isAccount)
+      );
   }
 }

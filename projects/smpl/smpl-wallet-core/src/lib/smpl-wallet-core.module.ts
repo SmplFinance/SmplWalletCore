@@ -1,10 +1,11 @@
-import {NgModule} from '@angular/core';
+import {Inject, ModuleWithProviders, NgModule} from '@angular/core';
 import {SmplWalletCoreComponent} from './smpl-wallet-core.component';
 import {KeycloakService} from 'keycloak-angular';
 import {SmplAuthGuardGuard} from './guards/smpl-auth-guard.guard';
-import {WalletService} from './services/wallet.service';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {JwtTokenInterceptor} from './interceptors/jwt-token.interceptor';
+import {HttpClientModule} from '@angular/common/http';
+import {SmplWalletCoreOptions} from './configs/smpl-wallet-core-options';
+import {SmplWalletCoreOptionsInjectionToken} from './configs/smpl-wallet-core-options-injection-token';
+import {CosmosWalletService} from './services/cosmos-wallet.service';
 
 
 @NgModule({
@@ -20,24 +21,41 @@ import {JwtTokenInterceptor} from './interceptors/jwt-token.interceptor';
   providers: [
     KeycloakService,
     SmplAuthGuardGuard,
-    WalletService,
+    CosmosWalletService,
   ]
 })
 export class SmplWalletCoreModule {
-  constructor(private keycloakService: KeycloakService) {
+  public static forRoot(config: SmplWalletCoreOptions): ModuleWithProviders<SmplWalletCoreModule> {
+    return {
+      ngModule: SmplWalletCoreModule,
+      providers: [
+        {
+          provide: SmplWalletCoreOptionsInjectionToken,
+          useValue: config
+        }
+      ]
+    }
+  }
+
+  constructor(
+    private keycloakService: KeycloakService,
+    @Inject(SmplWalletCoreOptionsInjectionToken) private config: SmplWalletCoreOptions
+  ) {
+    // {
+    //   config: {
+    //     url: 'http://localhost:8080/auth',
+    //       realm: 'SmplFinance',
+    //       clientId: 'smpl-angular-client',
+    //   },
+    //   initOptions: {
+    //     onLoad: 'login-required',
+    //   },
+    //   enableBearerInterceptor: true,
+    //     bearerExcludedUrls: [],
+    // }
+
     keycloakService
-      .init({
-        config: {
-          url: 'http://keycloak:8080/auth',
-          realm: 'SmplFinance',
-          clientId: 'smpl-angular-client',
-        },
-        initOptions: {
-          onLoad: 'login-required',
-        },
-        enableBearerInterceptor: true,
-        bearerExcludedUrls: [],
-      })
+      .init(config.keycloakOptions)
       .then(r => console.log('keyclaok initiated', r));
   }
 }
