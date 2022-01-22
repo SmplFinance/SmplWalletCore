@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class SmplSecretsVaultWalletServiceService {
+export class SmplSecretsVaultService {
 
   constructor(
     private httpClient: HttpClient,
