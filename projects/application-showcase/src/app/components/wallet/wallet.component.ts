@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CosmosWalletService, SmplSecretsVaultWalletServiceService} from '@smpl/smpl-wallet-core';
+import {CosmosWalletService, SmplSecretsVaultService} from '@smpl/smpl-wallet-core';
 import {DirectSecp256k1HdWallet, EncodeObject, Registry} from '@cosmjs/proto-signing';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {enc} from 'crypto-js'
@@ -23,7 +23,7 @@ export class WalletComponent implements OnInit {
   constructor(
     private walletService: CosmosWalletService,
     private httpClient: HttpClient,
-    private smplSecretsVaultWalletService: SmplSecretsVaultWalletServiceService
+    private smplSecretsVaultService: SmplSecretsVaultService
   ) {
   }
 
@@ -180,7 +180,7 @@ export class WalletComponent implements OnInit {
         mergeMap(
           isAccount => iif(() => isAccount,
             of(isAccount),
-            this.smplSecretsVaultWalletService.sendFaucetTokens(accountAddress)
+            this.smplSecretsVaultService.sendFaucetTokens(accountAddress)
               .pipe(delay(6000))
           )
         ),

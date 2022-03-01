@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DirectSecp256k1HdWallet} from '@cosmjs/proto-signing';
-import {catchError, filter, from, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {catchError, from, map, mergeMap, Observable, tap} from 'rxjs';
 import {StargateClient} from '@cosmjs/stargate';
 
 const smplPrefix = 'smpl'

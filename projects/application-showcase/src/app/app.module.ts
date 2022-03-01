@@ -18,9 +18,9 @@ const keycloakOptions: KeycloakOptions = {
   },
   initOptions: {
     onLoad: 'check-sso',
-  },
-  enableBearerInterceptor: true,
-  bearerExcludedUrls: [],
+    // checkLoginIframe: false,
+    pkceMethod: 'S256',
+  }
 }
 
 @NgModule({
