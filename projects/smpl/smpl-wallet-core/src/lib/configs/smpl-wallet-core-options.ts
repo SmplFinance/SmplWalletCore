@@ -5,5 +5,4 @@ export interface SmplWalletCoreOptions {
   queryUrl: URL;
   txUrl: URL;
   smplSecretsVaultFaucetUrl: URL;
-  keycloakOptions: KeycloakOptions;
 }
